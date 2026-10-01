@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COMP3123 – exec04 Instructions (with Static Middleware)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #22d3ee;
+      --accent-2: #a78bfa;
+      --border: #1f2937;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial;
+      background: radial-gradient(1000px 500px at 10% -10%, rgba(34,211,238,.15), transparent 70%),
+                  radial-gradient(800px 400px at 90% 10%, rgba(167,139,250,.12), transparent 60%),
+                  linear-gradient(180deg, var(--bg), #0b1223 55%, #0a0f1f);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 48px auto;
+      padding: 0 20px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b1223;
+      font-weight: 800;
+      padding: 8px 12px;
+      border-radius: 999px;
+      letter-spacing: .02em;
+      font-size: 13px;
+      box-shadow: 0 8px 30px rgba(34, 211, 238, .25);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 3.2vw, 38px);
+      letter-spacing: .01em;
+    }
+    .card {
+      background: rgba(17, 24, 39, .8);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      margin: 18px 0;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    h2 {
+      font-size: 20px;
+      margin: 0 0 8px;
+      letter-spacing: .02em;
+    }
+    h3 {
+      font-size: 16px;
+      margin: 18px 0 6px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+    p { margin: 10px 0; }
+    .muted { color: var(--muted); }
+    .list {
+      padding-left: 18px;
+      margin: 10px 0;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 13.5px;
+    }
+    pre {
+      margin: 12px 0;
+      padding: 14px;
+      background: #0b1020;
+      border: 1px solid #1c2546;
+      border-radius: 14px;
+      overflow: auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+    .checklist li {
+      list-style: none;
+      margin: 8px 0;
+    }
+    .checklist input {
+      transform: translateY(1.5px);
+      margin-right: 8px;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .pill {
+      font-size: 12px;
+      display: inline-block;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">COMP3123 • exec04</span>
+      <h1>Express JS Exercise Instructions</h1>
+    </header>
+
+    <div class="card">
+      <div class="grid">
+        <div>
+          <h2>Overview</h2>
+          <p class="muted">Build an Express.js application and submit your work as a ZIP file and a GitHub repository. Include screenshots of your API calls (e.g., Postman) showing outputs or any errors. Also add static middleware so that an <code>instruction.html</code> file can be served from a <code>public</code> folder.</p>
+        </div>
+        <div>
+          <h2>Submission naming</h2>
+          <p><strong>ZIP:</strong> <code>StudentID_COMP3123-exec04.zip</code></p>
+          <p><strong>Repository:</strong> <code>StudentID_COMP3123-exec04</code></p>
+          <p><span class="pill">Replace <em>StudentID</em> with your actual ID</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Required Deliverables</h2>
+      <ul class="list">
+        <li>Create an Express JS application named <code>StudentID_COMP3123-exec04</code>.</li>
+        <li>Add the Express framework and <code>nodemon</code> to <code>package.json</code>.</li>
+        <li>Implement the routes described below.</li>
+        <li>Add static middleware to serve <code>instruction.html</code> from the <code>public</code> folder.</li>
+        <li>Upload screenshots showing output or any errors (e.g., from Postman).</li>
+        <li>Submit your GitHub repository link and upload the ZIP: <code>StudentID_COMP3123-exec04.zip</code>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Endpoints to Implement</h2>
+
+      <h3>GET <code>/hello</code></h3>
+      <div class="callout">
+        <p>Returns <code>Hello Express JS</code> as plain text.</p>
+      </div>
+
+      <h3>GET <code>/user</code> (query parameters)</h3>
+      <p>Accepts query string parameters: <code>?firstname=&lt;value&gt;&amp;lastname=&lt;value&gt;</code>.</p>
+      <ul class="list">
+        <li>If parameters are not provided, default to <code>firstname = "Pritesh"</code> and <code>lastname = "Patel"</code>.</li>
+      </ul>
+      <p><strong>Example request:</strong> <code>GET /user?firstname=John&amp;lastname=Doe</code></p>
+      <p><strong>Example response:</strong></p>
+      <pre><code>{ "firstname": "John", "lastname": "Doe" }</code></pre>
+
+      <h3>POST <code>/user/:firstname/:lastname</code> (path parameters)</h3>
+      <p>Expects path parameters for <code>firstname</code> and <code>lastname</code>.</p>
+      <p><strong>Example request:</strong> <code>POST /user/John/Doe</code></p>
+      <p><strong>Example response:</strong></p>
+      <pre><code>{ "firstname": "John", "lastname": "Doe" }</code></pre>
+
+      <h3>POST <code>/users</code> (body – array of users)</h3>
+      <p>Expects a JSON array in the request body, each item with <code>firstname</code> and <code>lastname</code>.</p>
+      <p><strong>Example request body:</strong></p>
+      <pre><code>[
+  { "firstname": "Pritesh", "lastname": "Patel" },
+  { "firstname": "John", "lastname": "Doe" },
+  { "firstname": "John", "lastname": "Rome" }
+]</code></pre>
+      <p><strong>Example response:</strong></p>
+      <pre><code>[
+  { "firstname": "Pritesh", "lastname": "Patel" },
+  { "firstname": "John", "lastname": "Doe" },
+  { "firstname": "John", "lastname": "Rome" }
+]</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>Static Middleware</h2>
+      <p>Use <code>express.static()</code> to serve the provided <code>instruction.html</code> (download the attached file for this exercise) from a <code>public</code> folder.</p>
+      <h3>Example project structure</h3>
+      <pre><code>StudentID_COMP3123-exec04/
+├─ package.json
+├─ index.js
+└─ public/
+   └─ instruction.html   &lt;— place the attached file here
+</code></pre>
+      <h3>index.js snippet</h3>
+      <pre><code>const express = require("express");
+const app = express();
+
+app.use(express.json());
+
+// ✅ Serve static files in /public (instruction.html will be at /instruction.html)
+app.use(express.static("public"));
+
+// GET /hello
+app.get("/hello", (req, res) => {
+  res.type("text/plain").send("Hello Express JS");
+});
+
+// GET /user?firstname=&amp;lastname=
+app.get("/user", (req, res) => {
+  const firstname = req.query.firstname || "Pritesh";
+  const lastname = req.query.lastname || "Patel";
+  res.json({ firstname, lastname });
+});
+
+// POST /user/:firstname/:lastname
+app.post("/user/:firstname/:lastname", (req, res) => {
+  const { firstname, lastname } = req.params;
+  res.json({ firstname, lastname });
+});
+
+// POST /users  (expects an array of { firstname, lastname })
+app.post("/users", (req, res) => {
+  const users = Array.isArray(req.body) ? req.body : [];
+  res.json(users);
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(\`Server running on http://localhost:\${PORT}\"));
+</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>Project Setup (Guidance)</h2>
+
+      <h3>1) Initialize project</h3>
+      <pre><code>mkdir StudentID_COMP3123-exec04
+cd StudentID_COMP3123-exec04
+npm init -y
+npm install express
+npm install --save-dev nodemon
+mkdir public
+# Place your instruction.html file into the ./public folder
+</code></pre>
+
+      <h3>2) <code>package.json</code> scripts</h3>
+      <pre><code>{
+  "name": "StudentID_COMP3123-exec04",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}</code></pre>
+
+      <h3>3) Run and test</h3>
+      <pre><code># Development (auto-restart):
+npm run dev
+
+# Production-style start:
+npm start
+
+# Test endpoints (examples):
+curl http://localhost:3000/hello
+curl "http://localhost:3000/user?firstname=John&lastname=Doe"
+curl -X POST http://localhost:3000/user/John/Doe
+curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '[{"firstname":"Pritesh","lastname":"Patel"},{"firstname":"John","lastname":"Doe"}]'
+# Static file (after placing it in public/):
+# http://localhost:3000/instruction.html
+</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>What to Submit</h2>
+      <ul class="list checklist">
+        <li><label><input type="checkbox" /> GitHub repository created: <code>StudentID_COMP3123-exec04</code> and link submitted.</label></li>
+        <li><label><input type="checkbox" /> ZIP uploaded: <code>StudentID_COMP3123-exec04.zip</code>.</label></li>
+        <li><label><input type="checkbox" /> Screenshots of Postman (or similar) showing each endpoint response and any errors.</label></li>
+        <li><label><input type="checkbox" /> Static file served from <code>/public/instruction.html</code> and reachable at <code>/instruction.html</code>.</label></li>
+      </ul>
+    </div>
+
+    <p class="footer">© COMP3123 – exec04 • Express JS exercise. This sheet is a formatted restatement of the provided instructions, including static middleware requirements.</p>
+  </div>
+</body>
+</html>
